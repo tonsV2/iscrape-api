@@ -1,6 +1,7 @@
 package dk.surfstation.iscrape.api.controller;
 
 import dk.surfstation.iscrape.api.resource.PageResource;
+import dk.surfstation.iscrape.business.domain.Page;
 import dk.surfstation.iscrape.business.service.PageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,18 +23,24 @@ public class ScrapeController {
 	@Autowired
 	private PageService pageService;
 
-
 	@RequestMapping(value = "/page", method = POST)
 	public String postPage(@RequestBody PageResource pageResource) {
 		log.info("postPage()");
 		log.info(pageResource.toString());
+		Page page = new Page(null, pageResource.getSlug(), pageResource.getUrl(), pageResource.getSelector(), pageResource.getContent());
+		pageService.save(page);
 		return pageResource.toString();
 	}
 
-	@RequestMapping(value = "/page/{slug}", method = GET)
-	public String getPage(@PathVariable String slug) {
-		log.info("getPage({})", slug);
+	@RequestMapping(value = "/page/{id}", method = GET)
+	public String getPage(@PathVariable Long id) {
+		log.info("getPage({})", id);
+		return pageService.findOne(id).getContent();
+	}
 
-		return pageService.findOne(slug).getContent();
+	@RequestMapping(value = "/page", method = GET)
+	public Iterable<Page> getAll() {
+		log.info("getAll()");
+		return pageService.findAll();
 	}
 }
