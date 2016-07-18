@@ -24,16 +24,22 @@ public class ScrapeController {
 	private PageService pageService;
 
 	@RequestMapping(value = "/page", method = POST)
-	public String postPage(@RequestBody PageResource pageResource) {
+	public Long postPage(@RequestBody PageResource pageResource) {
 		log.info("postPage()");
 		log.info(pageResource.toString());
 		Page page = new Page(null, pageResource.getSlug(), pageResource.getUrl(), pageResource.getSelector(), pageResource.getContent());
-		pageService.save(page);
-		return pageResource.toString();
+		Page saved = pageService.save(page);
+		return saved.getId();
 	}
 
 	@RequestMapping(value = "/page/{id}", method = GET)
-	public String getPage(@PathVariable Long id) {
+	public Page getPage(@PathVariable Long id) {
+		log.info("getPage({})", id);
+		return pageService.findOne(id);
+	}
+
+	@RequestMapping(value = "/page/{id}/content", method = GET)
+	public String getPageContent(@PathVariable Long id) {
 		log.info("getPage({})", id);
 		return pageService.findOne(id).getContent();
 	}
