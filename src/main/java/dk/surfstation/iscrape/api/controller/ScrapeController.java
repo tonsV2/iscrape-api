@@ -40,7 +40,7 @@ public class ScrapeController {
 
 	@RequestMapping(value = "/page/{id}/content", method = GET)
 	public String getPageContent(@PathVariable Long id) {
-		log.info("getPage({})", id);
+		log.info("getPageContent({})", id);
 		return pageService.findOne(id).getContent();
 	}
 
