@@ -2,7 +2,7 @@ package dk.surfstation.iscrape.api.controller;
 
 import dk.surfstation.iscrape.api.resource.PageResource;
 import dk.surfstation.iscrape.business.domain.Page;
-import dk.surfstation.iscrape.business.service.PageService;
+import dk.surfstation.iscrape.business.service.PageServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class ScrapeController {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private PageService pageService;
+	private PageServiceInterface pageService;
 
 	@RequestMapping(value = "/page", method = POST)
 	public Long postPage(@RequestBody PageResource pageResource) {
