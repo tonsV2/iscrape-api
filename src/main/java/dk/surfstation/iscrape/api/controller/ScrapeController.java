@@ -23,7 +23,7 @@ public class ScrapeController {
 	@Autowired
 	private PageServiceInterface pageService;
 
-	@RequestMapping(value = "/page", method = POST)
+	@RequestMapping(value = "/pages", method = POST)
 	public Long postPage(@RequestBody PageResource pageResource) {
 		log.info("postPage()");
 		log.info(pageResource.toString());
@@ -32,19 +32,19 @@ public class ScrapeController {
 		return saved.getId();
 	}
 
-	@RequestMapping(value = "/page/{id}", method = GET)
+	@RequestMapping(value = "/pages/{id}", method = GET)
 	public Page getPage(@PathVariable Long id) {
 		log.info("getPage({})", id);
 		return pageService.findOne(id);
 	}
 
-	@RequestMapping(value = "/page/{id}/content", method = GET)
+	@RequestMapping(value = "/pages/{id}/content", method = GET)
 	public String getPageContent(@PathVariable Long id) {
 		log.info("getPageContent({})", id);
 		return pageService.findOne(id).getContent();
 	}
 
-	@RequestMapping(value = "/page", method = GET)
+	@RequestMapping(value = "/pages", method = GET)
 	public Iterable<Page> getAll() {
 		log.info("getAll()");
 		return pageService.findAll();
